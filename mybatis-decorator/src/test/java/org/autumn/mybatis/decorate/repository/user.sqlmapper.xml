@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.autumn.mybatis.decorate.repository.UserRepository">
+
+    <!-- 查询列表 -->
+    <select id="findAll" resultType="org.autumn.mybatis.decorate.domain.UserBean">
+        SELECT U.*
+        FROM PF_USER U
+        <where>
+            <bind name="#if" value="AND, U.USER_ID, userId"/>
+            <bind name="#if.like" value="AND, U.USER_NAME"/>
+        </where>
+        ORDER BY U.USER_ID
+    </select>
+
+    <!-- 查找 -->
+    <select id="find" resultType="org.autumn.mybatis.decorate.domain.UserBean">
+        SELECT U.*
+        FROM PF_USER U
+        WHERE U.USER_ID = #{userId, jdbcType=VARCHAR}
+    </select>
+
+    <!-- 添加 -->
+    <insert id="insert">
+        <bind name="#insert" value="PF_USER"/>
+    </insert>
+
+    <!-- 修改 -->
+    <update id="update">
+        <bind name="#update" value="PF_USER"/>
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete">
+        <bind name="#delete" value="PF_USER"/>
+    </delete>
+</mapper>
