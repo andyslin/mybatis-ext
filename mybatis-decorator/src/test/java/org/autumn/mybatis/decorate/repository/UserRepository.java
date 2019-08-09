@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.autumn.mybatis.decorate.domain.UserBean;
-import org.autumn.mybatis.decorate.domain.UserForm;
+import org.autumn.mybatis.domain.user.UserBean;
+import org.autumn.mybatis.domain.user.UserForm;
 
 @Mapper
 public interface UserRepository {

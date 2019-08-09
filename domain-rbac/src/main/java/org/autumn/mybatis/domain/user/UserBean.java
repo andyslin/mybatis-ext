@@ -1,4 +1,4 @@
-package org.autumn.mybatis.decorate.domain;
+package org.autumn.mybatis.domain.user;
 
 import java.io.Serializable;
 

@@ -39,7 +39,7 @@
    1. 删除每个用户的用户角色关系
 
 ### 建表语句
-> 已MySQL为例，H2、Oracle等可以直接查看项目中的SQL脚本（目录：classpath:/META-INF/sql/)
+> 以MySQL为例，H2、Oracle等可以直接查看项目中的SQL脚本（目录：classpath:/META-INF/sql/)
 ```sql
 /*==============================================================*/
 /* Table: PF_USER                                               */

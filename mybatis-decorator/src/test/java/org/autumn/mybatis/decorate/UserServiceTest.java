@@ -3,9 +3,9 @@ package org.autumn.mybatis.decorate;
 import java.util.List;
 
 import org.autumn.mybatis.MybatisBootApplicationTests;
-import org.autumn.mybatis.decorate.domain.UserBean;
-import org.autumn.mybatis.decorate.domain.UserForm;
 import org.autumn.mybatis.decorate.repository.UserRepository;
+import org.autumn.mybatis.domain.user.UserBean;
+import org.autumn.mybatis.domain.user.UserForm;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +20,12 @@ public class UserServiceTest extends MybatisBootApplicationTests {
     public void testFindAll() {
         UserForm form = UserForm.builder()
                 .userId("1")
-                .userName("zhang")
+                .userName("张")
                 .build();
         List<UserBean> list = repository.findAll(form);
         list.forEach(System.out::println);
         Assert.assertEquals(1, list.size());
-        Assert.assertEquals("zhangsan", list.get(0).getUserName());
+        Assert.assertEquals("张三", list.get(0).getUserName());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class UserServiceTest extends MybatisBootApplicationTests {
     public void testInsert() {
         UserForm form = UserForm.builder()
                 .userId("3")
-                .userName("wangwu")
+                .userName("王五")
                 .age(18)
                 .salary(5000)
                 .build();

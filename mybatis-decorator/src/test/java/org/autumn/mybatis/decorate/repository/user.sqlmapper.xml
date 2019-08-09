@@ -3,7 +3,7 @@
 <mapper namespace="org.autumn.mybatis.decorate.repository.UserRepository">
 
     <!-- 查询列表 -->
-    <select id="findAll" resultType="org.autumn.mybatis.decorate.domain.UserBean">
+    <select id="findAll" resultType="org.autumn.mybatis.domain.user.UserBean">
         SELECT U.*
         FROM PF_USER U
         <where>
@@ -14,7 +14,7 @@
     </select>
 
     <!-- 查找 -->
-    <select id="find" resultType="org.autumn.mybatis.decorate.domain.UserBean">
+    <select id="find" resultType="org.autumn.mybatis.domain.user.UserBean">
         SELECT U.*
         FROM PF_USER U
         WHERE U.USER_ID = #{userId, jdbcType=VARCHAR}
