@@ -13,6 +13,7 @@ public class BaseBindFunctionFactory implements BindFunctionFactory {
     public Collection<BindFunction> getBindFunctions() {
         List<BindFunction> functions = new ArrayList<>();
         functions.add(new IfBindFunction());
+        functions.add(new FieldsBindFunction());
         functions.add(new InsertBindFunction());
         functions.add(new UpdateBindFunction());
         functions.add(new DeleteBindFunction());
