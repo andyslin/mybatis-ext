@@ -9,22 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mybatis-decorator</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>mybatis-test-support</artifactId>
 
 
     <dependencies>
+        <!--测试-->
         <dependency>
-            <groupId>org.autumn</groupId>
-            <artifactId>mybatis-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.autumn</groupId>
-            <artifactId>mybatis-test-support</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
     </dependencies>
-
 </project>

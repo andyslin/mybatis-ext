@@ -9,16 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mybatis-decorator</artifactId>
+    <artifactId>mybatis-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-
     <dependencies>
-        <dependency>
-            <groupId>org.autumn</groupId>
-            <artifactId>mybatis-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>org.autumn</groupId>
             <artifactId>mybatis-test-support</artifactId>
@@ -26,5 +20,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>

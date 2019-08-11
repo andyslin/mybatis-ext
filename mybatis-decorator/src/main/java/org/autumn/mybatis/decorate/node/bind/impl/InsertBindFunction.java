@@ -1,14 +1,14 @@
 package org.autumn.mybatis.decorate.node.bind.impl;
 
-import java.util.List;
-
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
+import org.autumn.mybatis.common.meta.MetaHolder;
+import org.autumn.mybatis.common.meta.domain.Column;
+import org.autumn.mybatis.common.meta.domain.Query;
 import org.autumn.mybatis.decorate.node.bind.BindFunction;
-import org.autumn.mybatis.meta.MetaHolder;
-import org.autumn.mybatis.meta.domain.Column;
-import org.autumn.mybatis.meta.domain.Query;
 import org.w3c.dom.Node;
+
+import java.util.List;
 
 /*package*/ class InsertBindFunction implements BindFunction {
 

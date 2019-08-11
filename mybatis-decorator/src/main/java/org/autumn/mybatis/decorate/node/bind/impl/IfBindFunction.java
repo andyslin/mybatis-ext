@@ -1,13 +1,13 @@
 package org.autumn.mybatis.decorate.node.bind.impl;
 
-import java.util.regex.Pattern;
-
 import org.apache.ibatis.session.Configuration;
+import org.autumn.mybatis.common.meta.MetaHolder;
 import org.autumn.mybatis.decorate.XmlHolder;
 import org.autumn.mybatis.decorate.node.bind.BindFunction;
-import org.autumn.mybatis.meta.MetaHolder;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Node;
+
+import java.util.regex.Pattern;
 
 /**
  * if语法：[where,]([and|or] [like|llike|rlike|>|>=] column[|property] [true|false]){1,}
@@ -38,7 +38,7 @@ import org.w3c.dom.Node;
             if ("WHERE".equalsIgnoreCase(arg)) {
                 addWhere = true;
             } else if (StringUtils.hasText(arg)) {
-                Tuple tuple = parseTuple(arg);
+                Tuple tuple = parseTuple(configuration, arg);
                 xml.append(tuple.toXml());
             }
         }
@@ -52,10 +52,9 @@ import org.w3c.dom.Node;
      * 解析为一个元组（连接词、操作符、列名、属性名、属性是否为boolean类型、布尔类型的取值）
      *
      * @param arg
-     *
      * @return
      */
-    private Tuple parseTuple(String arg) {
+    private Tuple parseTuple(Configuration configuration, String arg) {
         Tuple tuple = new Tuple();
         String[] words = BLANK.split(arg);
         if (1 == words.length) {//只有一个单词
@@ -79,7 +78,7 @@ import org.w3c.dom.Node;
 
         // 字段|属性
         String[] arr = VERTICAL_LINE.split(tuple.column);
-        tuple.property = arr.length >= 2 ? arr[1] : MetaHolder.column2Property(tuple.column);
+        tuple.property = arr.length >= 2 ? arr[1] : MetaHolder.column2Property(configuration, tuple.column);
         return tuple;
     }
 

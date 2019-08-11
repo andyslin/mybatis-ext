@@ -1,7 +1,7 @@
 package org.autumn.mybatis.decorate.node.bind;
 
 import org.apache.ibatis.session.Configuration;
-import org.autumn.mybatis.AutumnHandlerRegistry;
+import org.autumn.mybatis.decorate.DecorateRegistry;
 import org.autumn.mybatis.decorate.node.SqlNodeDecorator;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -13,7 +13,6 @@ public class BindFunctionDecorator implements SqlNodeDecorator {
      *
      * @param configuration
      * @param node
-     *
      * @return
      */
     @Override
@@ -33,6 +32,6 @@ public class BindFunctionDecorator implements SqlNodeDecorator {
      */
     @Override
     public void decorate(Configuration configuration, Node node) {
-        AutumnHandlerRegistry.evalBindFunction(configuration, node);
+        DecorateRegistry.evalBindFunction(configuration, node);
     }
 }

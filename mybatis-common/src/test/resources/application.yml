@@ -1,5 +1,5 @@
 logging:
-  file: autumn-mybatis-decorator.log
+  file: autumn-mybatis-common.log
   level:
     mybatis: DEBUG
 
@@ -13,14 +13,6 @@ spring:
     active:
       - h2
 
-mybatis:
-  configuration:
-    auto-mapping-behavior: full
-    map-underscore-to-camel-case: true
-    use-column-label: true
-    default-scripting-language: org.autumn.mybatis.decorate.DecorateXmlLanguageDriver
-    log-prefix: mybatis.
-  mapper-locations: classpath*:/**/*.sqlmapper.xml
 ---
 spring:
   profiles: h2

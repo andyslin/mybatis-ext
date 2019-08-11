@@ -8,8 +8,9 @@
     <artifactId>mybatis-ext</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <modules>
+        <module>mybatis-test-support</module>
+        <module>mybatis-common</module>
         <module>mybatis-decorator</module>
-        <module>domain-rbac</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -61,18 +62,7 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--测试-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.autumn</groupId>
-            <artifactId>domain-rbac</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
