@@ -16,6 +16,7 @@ public class DecorateXmlLanguageDriver extends XMLLanguageDriver {
         while (nodeDecorate(configuration, node)) {
         }
         textDecorate(configuration, node);
+        // 调用父类的方法
         return super.createSqlSource(configuration, script, parameterType);
     }
 

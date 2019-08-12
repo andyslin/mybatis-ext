@@ -19,12 +19,28 @@ public interface UserRepository {
     List<UserBean> findAll(UserForm form);
 
     /**
+     * 查询列表
+     *
+     * @param form
+     * @return
+     */
+    List<UserBean> findAllOld(UserForm form);
+
+    /**
      * 查找
      *
      * @param userId
      * @return
      */
     UserBean find(@Param("userId") String userId);
+
+    /**
+     * 新增
+     *
+     * @param form
+     * @return
+     */
+    int insertOld(UserForm form);
 
     /**
      * 新增

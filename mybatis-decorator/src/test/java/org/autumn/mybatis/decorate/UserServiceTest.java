@@ -23,6 +23,9 @@ public class UserServiceTest extends MybatisBootApplicationTests {
                 .userName("张")
                 .build();
         List<UserBean> list = repository.findAll(form);
+        List<UserBean> listOld = repository.findAllOld(form);
+
+
         list.forEach(System.out::println);
         Assert.assertEquals(1, list.size());
         Assert.assertEquals("张三", list.get(0).getUserName());
@@ -39,7 +42,7 @@ public class UserServiceTest extends MybatisBootApplicationTests {
                 .build();
 
         // 新增
-        int sqlCount = repository.insert(form);
+        int sqlCount = repository.insertOld(form);
         Assert.assertEquals(1, sqlCount);
 
         // 查找，并验证新增的数据
