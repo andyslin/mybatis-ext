@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${module.packageName}.${module.name3}.${module.name1}Repository">
+	
+	<#assign keyCondition>
+        <#if table.keys??>
+            <#list table.keys as column>
+               <#if (column?index>0) >AND </#if>${column.columnName} = ${column.mybatisField}
+            </#list>
+        <#else>
+
+        </#if>
+	</#assign>
+	<#assign queryFieldList>
+		<#list table.columns as column>
+			   ${column.columnName}<#sep>,
+		</#list>
+	</#assign>
+	<!-- 查询列表 -->
+	<select id="findAll" resultType="${module.packageName}.${module.name3}.${module.name1}Bean">
+		SELECT ${queryFieldList?trim}
+		  FROM ${table.tableName}
+        <#if table.keys??>
+		 ORDER BY <#list table.keys as column>${column.columnName}<#sep>,</#list>
+        </#if>
+	</select>
+	
+	<!-- 查找记录-->
+	<select id="find" resultType="${module.packageName}.${module.name3}.${module.name1}Bean">
+		SELECT ${queryFieldList?trim}
+		  FROM ${table.tableName}
+		 WHERE ${keyCondition?trim}
+	</select>
+	
+	<#assign insertFieldList>
+		<#list table.columns?chunk(4) as row>
+			    <#list row as column>${column.columnName}<#sep>, </#list><#sep>,
+		</#list>
+	</#assign>
+	<#assign insertValueList>
+		<#list table.columns?chunk(4) as row>
+			    <#list row as column>${column.mybatisField}<#sep>, </#list><#sep>,
+		</#list>
+	</#assign>
+	<!-- 新增-->
+	<insert id="insert" >
+	    INSERT INTO ${table.tableName} 
+	           (${insertFieldList?trim})
+	    VALUES (${insertValueList?trim})
+  	</insert>
+  	
+  	<#assign updateFieldList>
+		<#list table.normals as column>
+			   ${column.columnName} = ${column.mybatisField}<#sep>,
+		</#list>
+	</#assign>
+  	<!-- 修改 -->
+  	<update id="update" >
+	    UPDATE ${table.tableName}
+	       SET ${updateFieldList?trim}
+		 WHERE ${keyCondition?trim}
+  	</update>
+  	
+	<!-- 删除 -->
+	<delete id="delete">
+		DELETE FROM ${table.tableName} 
+		 WHERE ${keyCondition?trim}
+	</delete>
+</mapper>

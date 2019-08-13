@@ -1,0 +1,35 @@
+logging:
+  file: autumn-mybatis-generator.log
+  level:
+    mybatis: DEBUG
+
+spring:
+  datasource:
+    initialization-mode: always
+    schema:
+      - classpath*:/META-INF/sql/${spring.datasource.platform}-schema.sql
+  profiles:
+    active:
+      - h2
+
+---
+spring:
+  profiles: h2
+  datasource:
+    platform: h2
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/autumn-mybatis
+    username: autumn
+    password: autumn
+  h2:
+    console:
+      enabled: true
+---
+spring:
+  profiles: mysql
+  datasource:
+    platform: mysql
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:MySQL://localhost:3306/autumn-mybatis?characterEncoding=utf8
+    username: autumn
+    password: autumn
