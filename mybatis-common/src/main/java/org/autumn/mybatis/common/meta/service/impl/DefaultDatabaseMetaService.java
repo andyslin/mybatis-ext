@@ -5,6 +5,7 @@ import org.autumn.mybatis.common.meta.MetaHolder;
 import org.autumn.mybatis.common.meta.domain.Column;
 import org.autumn.mybatis.common.meta.domain.Query;
 import org.autumn.mybatis.common.meta.service.DatabaseMetaService;
+import org.springframework.jdbc.support.JdbcUtils;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -267,7 +268,7 @@ public class DefaultDatabaseMetaService implements DatabaseMetaService {
 
     private void setJdbcType(Column column, int sqlType) {
         column.setSqlType(sqlType);
-
+        column.setNumeric(JdbcUtils.isNumeric(sqlType));
         String jdbcType = this.getJdbcType(sqlType);
         column.setJdbcType(jdbcType);
         String javaType = this.getJavaType(sqlType);

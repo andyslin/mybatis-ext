@@ -156,7 +156,7 @@ public class DecorateRegistry {
             throw new RuntimeException("not found bind-function [name=" + name + "]");
         }
         String value = element.getAttribute("value");
-        bindFunction.eval(configuration, node, subName, value);
+        bindFunction.eval(configuration, element, subName, value);
     }
 
     /**

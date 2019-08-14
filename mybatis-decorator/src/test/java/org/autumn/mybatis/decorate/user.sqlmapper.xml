@@ -43,7 +43,7 @@
     <!-- 查询列表 -->
     <select id="findAll" resultType="org.autumn.mybatis.domain.user.UserBean">
         SELECT
-        <bind name="#fields" value="U.PF_USER"/>
+        <bind name="#fields" value="U.PF_USER,AGE"/>
         FROM PF_USER U
         <bind name="#if" value="where, U.USER_ID, like U.USER_NAME"/>
         ORDER BY U.USER_ID

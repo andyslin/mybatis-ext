@@ -47,6 +47,11 @@ public class Column implements Serializable {
     private String javaType;
 
     /**
+     * 是否数字类型
+     */
+    private boolean isNumeric;
+
+    /**
      * 类型名称
      */
     private String typeName;

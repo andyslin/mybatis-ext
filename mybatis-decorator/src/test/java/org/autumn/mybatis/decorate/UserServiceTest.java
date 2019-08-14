@@ -23,7 +23,7 @@ public class UserServiceTest extends MybatisBootApplicationTests {
                 .userName("张")
                 .build();
         List<UserBean> list = repository.findAll(form);
-        List<UserBean> listOld = repository.findAllOld(form);
+        //List<UserBean> listOld = repository.findAllOld(form);
 
 
         list.forEach(System.out::println);

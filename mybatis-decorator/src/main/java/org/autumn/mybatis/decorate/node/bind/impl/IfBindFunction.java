@@ -5,7 +5,7 @@ import org.autumn.mybatis.common.meta.MetaHolder;
 import org.autumn.mybatis.decorate.XmlHolder;
 import org.autumn.mybatis.decorate.node.bind.BindFunction;
 import org.springframework.util.StringUtils;
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 import java.util.regex.Pattern;
 
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
     }
 
     @Override
-    public void eval(Configuration configuration, Node node, String subName, String bindValue) {
+    public void eval(Configuration configuration, Element bind, String subName, String bindValue) {
         // 最终生成的XML字符串
         StringBuilder xml = new StringBuilder();
         // 循环处理空格或逗号分隔的配置参数
@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
         if (addWhere) {
             xml.insert(0, "<where>").append("</where>");
         }
-        XmlHolder.replaceNode(node, xml.toString());
+        XmlHolder.replaceNode(bind, xml.toString());
     }
 
     /**
