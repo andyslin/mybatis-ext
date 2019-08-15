@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /*package*/ class UpdateBindFunction extends AbstractMetadataBindFunction {
@@ -17,7 +18,7 @@ import java.util.Set;
     }
 
     @Override
-    protected void eval(Configuration configuration, Element bind, String subName, String alias, Query query, Set<String> excludes) {
+    protected void eval(Configuration configuration, Element bind, String subName, String alias, Query query, Set<String> excludes, Map<String, String> vars) {
         List<Column> keys = query.getKeys();
         StringBuilder where = new StringBuilder();
         for (Column column : keys) {

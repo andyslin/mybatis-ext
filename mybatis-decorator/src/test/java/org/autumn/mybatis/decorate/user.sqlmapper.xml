@@ -59,8 +59,9 @@
 
     <!-- 添加 -->
     <insert id="insertOld">
-        INSERT INTO PF_USER(USER_ID, USER_NAME, AGE, SALARY)
-        VALUES(#{userId, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{age, jdbcType=INTEGER}, #{salary, jdbcType=DECIMAL})
+        INSERT INTO PF_USER(<bind name="#fields.name" value="PF_USER"/>)
+        VALUES(#{userId, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{age, jdbcType=INTEGER},
+        #{salary, jdbcType=DECIMAL})
     </insert>
 
     <!-- 添加 -->
