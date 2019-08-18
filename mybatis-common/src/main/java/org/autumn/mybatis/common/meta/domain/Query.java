@@ -20,18 +20,32 @@ public class Query implements Serializable {
     private String catalog;
 
     private String schema;
-
+    /**
+     * 表名
+     */
     private String tableName;
-
+    /**
+     * 表注释
+     */
     private String comment;
-
+    /**
+     * 表类型（视图、表、SQL等）
+     */
     private String type;
-
+    /**
+     * 是否为SQL语句
+     */
     private boolean isSql;
-
+    /**
+     * 字段集合
+     */
     private List<Column> columns;
-
+    /**
+     * 主键
+     */
     private List<Column> keys;
-
+    /**
+     * 普通字段
+     */
     private List<Column> normals;
 }

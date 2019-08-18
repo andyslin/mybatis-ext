@@ -16,7 +16,7 @@ public class MetaHolderTest extends MybatisBootApplicationTests {
 
     @Test
     public void testParseSql() {
-        Query query = MetaHolder.parseTableNameOrSql(dataSource, " select * from PF_USER");
+        Query query = MetaHolder.parseTableNameOrSql(dataSource, "select * from PF_USER");
         Assert.assertTrue(query.isSql());
         // 通过SQL语句获取不到注释
         Assert.assertFalse(StringUtils.hasLength(query.getComment()));
