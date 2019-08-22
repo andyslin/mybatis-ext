@@ -1,5 +1,7 @@
 package org.autumn.mybatis.decorate.node.bind.impl;
 
+import java.util.regex.Pattern;
+
 import org.apache.ibatis.session.Configuration;
 import org.autumn.mybatis.common.meta.MetaHolder;
 import org.autumn.mybatis.decorate.XmlHolder;
@@ -7,10 +9,8 @@ import org.autumn.mybatis.decorate.node.bind.BindFunction;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
-import java.util.regex.Pattern;
-
 /**
- * if语法：[where,]([and|or] [like|llike|rlike|>|>=] column[|property] [true|false]){1,}
+ * if语法：[where,]([and|or] [like|llike|rlike|eq|ne|ge|gt|le|lt|>|>=|!=] column[|property] [true|false]){1,}
  * <p>
  */
 /*package*/  class IfBindFunction implements BindFunction {
@@ -52,6 +52,7 @@ import java.util.regex.Pattern;
      * 解析为一个元组（连接词、操作符、列名、属性名、属性是否为boolean类型、布尔类型的取值）
      *
      * @param arg
+     *
      * @return
      */
     private Tuple parseTuple(Configuration configuration, String arg) {
@@ -78,7 +79,12 @@ import java.util.regex.Pattern;
 
         // 字段|属性
         String[] arr = VERTICAL_LINE.split(tuple.column);
-        tuple.property = arr.length >= 2 ? arr[1] : MetaHolder.column2Property(configuration, tuple.column);
+        if (arr.length >= 2) {
+            tuple.property = arr[1];
+            tuple.column = arr[0];
+        } else {
+            tuple.property = MetaHolder.column2Property(configuration, tuple.column);
+        }
         return tuple;
     }
 
@@ -97,12 +103,25 @@ import java.util.regex.Pattern;
             } else {
                 xml.append("<if test=\"").append("null != ").append(property).append(" and '' != ").append(property).append("\">");
             }
-            xml.append(" ").append(join).append(" ").append(column).append(" ");
+            xml.append(" ").append(join).append(" ");
             if ("like".equals(operate) || "llike".equals(operate) || "rlike".equals(operate)) {
                 // 这里使用了$like{}配置函数
-                xml.append("$").append(operate).append("{#{").append(property).append(",jdbcType=VARCHAR}}");
+                xml.append(column).append(" $").append(operate).append("{#{").append(property).append(",jdbcType=VARCHAR}}");
+            } else if ("eq".equals(operate)) {
+                xml.append(column).append(" = #{").append(property).append(",jdbcType=VARCHAR}");
+            } else if ("ne".equals(operate)) {
+                xml.append(column).append(" != #{").append(property).append(",jdbcType=VARCHAR}");
+            } else if ("ge".equals(operate)) {
+                xml.append(column).append(" >= #{").append(property).append(",jdbcType=VARCHAR}");
+            } else if ("gt".equals(operate)) {
+                xml.append(column).append(" > #{").append(property).append(",jdbcType=VARCHAR}");
+            } else if ("le".equals(operate) || "<=".equals(operate)) {
+                // le、lt通过将column写在后面实现
+                xml.append(" #{").append(property).append(",jdbcType=VARCHAR} >= ").append(column);
+            } else if ("lt".equals(operate) || "<".equals(operate)) {
+                xml.append(" #{").append(property).append(",jdbcType=VARCHAR} > ").append(column);
             } else {
-                xml.append(operate).append(" #{").append(property).append(",jdbcType=VARCHAR}");
+                xml.append(column).append(" ").append(operate).append(" #{").append(property).append(",jdbcType=VARCHAR}");
             }
             xml.append("</if>");
             return xml.toString();
