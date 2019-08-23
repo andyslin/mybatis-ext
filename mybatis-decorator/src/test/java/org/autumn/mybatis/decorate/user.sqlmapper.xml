@@ -28,7 +28,7 @@
             </if>
             <if test="null != userName and '' != userName">
                 <choose>
-                    <when test="_databaseId = 'mysql">
+                    <when test="_databaseId = 'mysql'">
                         and U.USER_NAME LIKE "%"#{userName, jdbcType=VARCHAR}"%"
                     </when>
                     <otherwise>
