@@ -36,8 +36,8 @@ import java.util.Set;
 
         String update = new StringBuilder()
                 .append("update ").append(query.getTableName())
-                .append(" set ").append(fields.substring(1))//去掉第一个,
-                .append("where ").append(where.substring(5))// 去掉第一个" AND "
+                .append("   set ").append(fields.substring(1))//去掉第一个,
+                .append(" where ").append(where.substring(5))// 去掉第一个" AND "
                 .toString();
 
         Node parentNode = bind.getParentNode();

@@ -4,50 +4,67 @@
 
     <!-- 根据主键查找 -->
     <select id="findByKey" resultType="map">
+        SELECT
+        <bind name="#fields" value="U.PF_USER,column=!keys,SALARY"/>
+        FROM PF_USER U
+        <bind name="#if.where" value="U.USER_ID"/>
+    </select>
+
+    <!-- 根据主键查找 -->
+    <select id="findByKey0" resultType="map">
         SELECT U.USER_ID, U.USER_NAME, U.AGE, U.SALARY
         FROM PF_USER U
         WHERE U.USER_ID = #{userId, jdbcType=VARCHAR}
     </select>
 
+    <!-- 多表关联查询 -->
+    <select id="selectJoin" resultType="map">
+        SELECT
+        <bind name="#fields" value="U.PF_USER"/>,
+        <bind name="#fields" value="R.PF_ROLE,prefix=ROLE_"/>
+        FROM PF_USER_ROLE UR
+        JOIN PF_USER U ON UR.USER_ID = U.USER_ID
+        JOIN PF_ROLE R ON UR.ROLE_ID = R.ROLE_ID
+        <bind name="#if.where" value="U.USER_ID,RLIKE U.USER_NAME,R.ROLE_ID,LLIKE R.ROLE_NAME"/>
+        ORDER BY U.USER_ID, R.ROLE_ID
+    </select>
 
-    <!-- 查询列表(简化前） -->
-    <select id="select" resultType="map">
-        SELECT U.USER_ID, U.USER_NAME, U.AGE, U.SALARY
-        FROM PF_USER U
+    <!-- 多表关联查询 -->
+    <select id="selectJoin0" resultType="map">
+        SELECT
+        U.USER_ID,
+        U.USER_NAME,
+        U.AGE,
+        U.SALARY,
+        R.ROLE_ID AS ROLE_ROLE_ID,
+        R.ROLE_NAME AS ROLE_ROLE_NAME,
+        R.DES AS ROLE_DES
+        FROM PF_USER_ROLE UR
+        JOIN PF_USER U ON UR.USER_ID = U.USER_ID
+        JOIN PF_ROLE R ON UR.ROLE_ID = R.ROLE_ID
         <where>
             <if test="null != userId and '' != userId">
                 and U.USER_ID = #{userId, jdbcType=VARCHAR}
             </if>
             <if test="null != userName and '' != userName">
-                <!-- h2或oracle -->
                 and U.USER_NAME LIKE '%'||#{userName, jdbcType=VARCHAR}||'%'
             </if>
+            <if test="null != roleId and '' != roleId">
+                and R.ROLE_ID = #{roleId, jdbcType=VARCHAR}
+            </if>
+            <if test="null != roleName and '' != roleName">
+                and R.ROLE_NAME LIKE '%'||#{roleName, jdbcType=VARCHAR}||'%'
+            </if>
         </where>
-        ORDER BY U.USER_ID
+        ORDER BY U.USER_ID, R.ROLE_ID
     </select>
 
-    <!-- 查询列表 -->
-    <select id="findAll" resultType="map">
-        SELECT
-        <bind name="#fields" value="U.PF_USER,AGE"/>
-        FROM PF_USER U
-        <bind name="#if" value="where, U.USER_ID, like U.USER_NAME"/>
-        ORDER BY U.USER_ID
-    </select>
-
-    <!-- 查找 -->
-    <select id="find1" resultType="map">
-        SELECT
-        <bind name="#fields" value="U.PF_USER"/>
-        FROM PF_USER U
-        WHERE U.USER_ID = #{userId, jdbcType=VARCHAR}
-    </select>
 
     <!-- 添加 -->
-    <insert id="insertOld">
-        INSERT INTO PF_USER(<bind name="#fields.name" value="PF_USER"/>)
-        VALUES(#{userId, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{age, jdbcType=INTEGER},
-        #{salary, jdbcType=DECIMAL})
+    <insert id="insert0">
+        INSERT INTO PF_USER(USER_ID, USER_NAME, AGE, SALARY)
+        VALUES(#{userId, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR},
+        #{age, jdbcType=INTEGER},#{salary, jdbcType=DECIMAL})
     </insert>
 
     <!-- 添加 -->
@@ -56,8 +73,26 @@
     </insert>
 
     <!-- 修改 -->
+    <update id="update0">
+        UPDATE PF_USER
+           SET USER_NAME = #{userName, jdbcType=VARCHAR},
+               AGE = #{age, jdbcType=INTEGER},
+               SALARY = #{salary, jdbcType=DECIMAL}
+         WHERE USER_ID = #{userId, jdbcType=VARCHAR}
+    </update>
+
+    <!-- 修改 -->
+    <update id="update1">
+        <bind name="#update" value="PF_USER,AGE"/>
+    </update>
+
+    <!-- 修改 -->
     <update id="update">
-        <bind name="#update" value="PF_USER"/>
+        UPDATE PF_USER
+        SET
+        <bind name="#fields.set" value="PF_USER,column=!KEYS"/>
+        WHERE
+        <bind name="#fields.and" value="PF_USER,column=KEYS"/>
     </update>
 
     <!-- 删除 -->

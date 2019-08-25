@@ -1,9 +1,5 @@
 package org.autumn.mybatis.decorate.node.bind.impl;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.ibatis.session.Configuration;
 import org.autumn.mybatis.common.meta.domain.Column;
 import org.autumn.mybatis.common.meta.domain.Query;
@@ -11,6 +7,10 @@ import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * fields语法：
@@ -85,7 +85,7 @@ import org.w3c.dom.Text;
                 String columnName = column.getColumnName();
                 if (!excludes.contains(columnName)) {
                     if (StringUtils.hasText(prefix)) {
-                        fields.append(",").append(alias).append(columnName).append(" AS ").append(prefix).append("_").append(columnName);
+                        fields.append(",").append(alias).append(columnName).append(" AS ").append(prefix).append(columnName);
                     } else {
                         fields.append(",").append(alias).append(columnName);
                     }
