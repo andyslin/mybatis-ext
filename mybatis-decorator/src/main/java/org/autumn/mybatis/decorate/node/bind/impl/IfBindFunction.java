@@ -1,7 +1,5 @@
 package org.autumn.mybatis.decorate.node.bind.impl;
 
-import java.util.regex.Pattern;
-
 import org.apache.ibatis.session.Configuration;
 import org.autumn.mybatis.common.meta.MetaHolder;
 import org.autumn.mybatis.decorate.XmlHolder;
@@ -9,8 +7,10 @@ import org.autumn.mybatis.decorate.node.bind.BindFunction;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
+import java.util.regex.Pattern;
+
 /**
- * if语法：[where,]([and|or] [like|llike|rlike|eq|ne|ge|gt|le|lt|>|>=|!=] column[|property] [true|false]){1,}
+ * if[.where]语法：[where,]([and|or] [like|llike|rlike|eq|ne|ge|gt|le|lt|>|>=|!=] column[|property] [true|false]){1,}
  * <p>
  */
 /*package*/  class IfBindFunction implements BindFunction {
@@ -32,7 +32,7 @@ import org.w3c.dom.Element;
         // 最终生成的XML字符串
         StringBuilder xml = new StringBuilder();
         // 循环处理空格或逗号分隔的配置参数
-        boolean addWhere = false;
+        boolean addWhere = "where".equalsIgnoreCase(subName);
         for (String arg : COMMA.split(bindValue)) {
             // 元字符
             if ("WHERE".equalsIgnoreCase(arg)) {
@@ -52,7 +52,6 @@ import org.w3c.dom.Element;
      * 解析为一个元组（连接词、操作符、列名、属性名、属性是否为boolean类型、布尔类型的取值）
      *
      * @param arg
-     *
      * @return
      */
     private Tuple parseTuple(Configuration configuration, String arg) {
