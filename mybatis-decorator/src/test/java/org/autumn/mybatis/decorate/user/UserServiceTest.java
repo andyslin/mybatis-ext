@@ -1,5 +1,6 @@
-package org.autumn.mybatis.decorate;
+package org.autumn.mybatis.decorate.user;
 
+import java.util.List;
 
 import org.autumn.mybatis.MybatisBootApplicationTests;
 import org.autumn.mybatis.domain.user.UserBean;
@@ -8,8 +9,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 public class UserServiceTest extends MybatisBootApplicationTests {
 
@@ -24,7 +23,6 @@ public class UserServiceTest extends MybatisBootApplicationTests {
                 .build();
         List<UserBean> list = repository.findAll(form);
         //List<UserBean> listOld = repository.findAllOld(form);
-
 
         list.forEach(System.out::println);
         Assert.assertEquals(1, list.size());
@@ -59,7 +57,6 @@ public class UserServiceTest extends MybatisBootApplicationTests {
         bean = repository.find(form.getUserId());
         Assert.assertNotNull(bean);
         Assert.assertEquals(form.getUserName(), bean.getUserName());
-
 
         // 删除
         sqlCount = repository.delete(form.getUserId());

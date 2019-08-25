@@ -1,11 +1,11 @@
-package org.autumn.mybatis.decorate;
+package org.autumn.mybatis.decorate.user;
+
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.autumn.mybatis.domain.user.UserBean;
 import org.autumn.mybatis.domain.user.UserForm;
-
-import java.util.List;
 
 @Mapper
 public interface UserRepository {
@@ -14,6 +14,7 @@ public interface UserRepository {
      * 查询列表
      *
      * @param form
+     *
      * @return
      */
     List<UserBean> findAll(UserForm form);
@@ -22,6 +23,7 @@ public interface UserRepository {
      * 查询列表
      *
      * @param form
+     *
      * @return
      */
     List<UserBean> findAllOld(UserForm form);
@@ -30,6 +32,7 @@ public interface UserRepository {
      * 查找
      *
      * @param userId
+     *
      * @return
      */
     UserBean find(@Param("userId") String userId);
@@ -38,6 +41,7 @@ public interface UserRepository {
      * 新增
      *
      * @param form
+     *
      * @return
      */
     int insertOld(UserForm form);
@@ -46,6 +50,7 @@ public interface UserRepository {
      * 新增
      *
      * @param form
+     *
      * @return
      */
     int insert(UserForm form);
@@ -54,6 +59,7 @@ public interface UserRepository {
      * 更新
      *
      * @param form
+     *
      * @return
      */
     int update(UserForm form);
@@ -62,6 +68,7 @@ public interface UserRepository {
      * 删除
      *
      * @param userId
+     *
      * @return
      */
     int delete(@Param("userId") String userId);
