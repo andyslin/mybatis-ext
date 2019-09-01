@@ -1,7 +1,5 @@
 package org.autumn.mybatis.common.registry;
 
-import org.springframework.core.annotation.AnnotationAwareOrderComparator;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,7 +8,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.springframework.core.annotation.AnnotationAwareOrderComparator;
+
 public class GenericRegistry {
+
+    /**
+     * 接口实现类注册器
+     */
+    public interface InstanceRegistry<I> {
+
+        /**
+         * 注册实现类的实例
+         *
+         * @param implInstance
+         */
+        void register(I implInstance);
+
+        /**
+         * 获取实现类的实例
+         *
+         * @return
+         */
+        I get();
+    }
+
 
     /**
      * 命名对象注册器接口
@@ -41,10 +62,12 @@ public class GenericRegistry {
          * 获取命名对象
          *
          * @param name
+         *
          * @return
          */
         N get(String name);
     }
+
 
     /**
      * 排序对象注册器接口
@@ -89,6 +112,11 @@ public class GenericRegistry {
         }
     }
 
+
+    /**
+     * 接口实现类缓存
+     */
+    private static final Map<Class<?>, Object> instances = new HashMap<>();
     /**
      * 命名对象缓存
      */
@@ -98,6 +126,54 @@ public class GenericRegistry {
      * 排序对象缓存
      */
     private static final Map<Class<?>, List<?>> ordered = new HashMap<>();
+
+    /**
+     * 注册接口的实现类实例
+     *
+     * @param interfaceClass
+     * @param implInstance
+     * @param <I>
+     */
+    public static <I> void registerInstance(Class<I> interfaceClass, I implInstance) {
+        synchronized (instances) {
+            instances.put(interfaceClass, implInstance);
+        }
+    }
+
+    /**
+     * 获取接口的实现类实例
+     *
+     * @param interfaceClass
+     * @param <I>
+     *
+     * @return
+     */
+    public static <I> I getInstance(Class<I> interfaceClass) {
+        Object o = instances.get(interfaceClass);
+        return interfaceClass.cast(o);
+    }
+
+    /**
+     * 获取接口实例注册器
+     *
+     * @param interfaceClass
+     * @param <I>
+     *
+     * @return
+     */
+    public static <I> InstanceRegistry<I> getInstanceRegistry(Class<I> interfaceClass) {
+        return new InstanceRegistry<I>() {
+            @Override
+            public void register(I implInstance) {
+                registerInstance(interfaceClass, implInstance);
+            }
+
+            @Override
+            public I get() {
+                return getInstance(interfaceClass);
+            }
+        };
+    }
 
     /**
      * 注册命名对象
@@ -119,6 +195,7 @@ public class GenericRegistry {
      * @param cls
      * @param name
      * @param <N>
+     *
      * @return
      */
     public static <N extends Named> N getNamed(Class<N> cls, String name) {
@@ -132,6 +209,7 @@ public class GenericRegistry {
      *
      * @param cls
      * @param <N>
+     *
      * @return
      */
     public static <N extends Named> NamedRegistry<N> getNamedRegistry(Class<N> cls) {
@@ -182,6 +260,7 @@ public class GenericRegistry {
      *
      * @param cls
      * @param <O>
+     *
      * @return
      */
     public static <O> List<O> getOrdered(Class<O> cls) {
@@ -203,6 +282,7 @@ public class GenericRegistry {
      *
      * @param cls
      * @param <O>
+     *
      * @return
      */
     public static <O> OrderedRegistry<O> getOrderedRegistry(Class<O> cls) {
