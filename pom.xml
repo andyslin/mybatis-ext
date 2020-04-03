@@ -12,6 +12,7 @@
         <module>mybatis-common</module>
         <module>mybatis-decorator</module>
         <module>mybatis-generator</module>
+        <module>mybatis-mapper-handler</module>
     </modules>
     <packaging>pom</packaging>
 

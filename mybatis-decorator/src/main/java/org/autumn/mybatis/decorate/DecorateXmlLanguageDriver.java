@@ -12,9 +12,10 @@ public class DecorateXmlLanguageDriver extends XMLLanguageDriver {
     @Override
     public SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterType) {
         Node node = script.getNode();
-        //循环处理所有装饰元素（包括装饰过程中新产生的装饰元素）
+        // 循环装饰特殊元素（包括装饰过程中新产生的装饰元素）
         while (nodeDecorate(configuration, node)) {
         }
+        // 装饰配置文本
         textDecorate(configuration, node);
         // 调用父类的方法
         return super.createSqlSource(configuration, script, parameterType);
